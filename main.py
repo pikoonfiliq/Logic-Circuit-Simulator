@@ -10,14 +10,6 @@ from utils import *
 WIN = pygame.display.set_mode(RESOLUTIONS[RES] ,pygame.FULLSCREEN)
 pygame.display.set_caption("bruh")
 
-def init_grid(rows,cols,color):
-    grid = []
-    for i in range(rows):
-        grid.append([])
-        for _ in range(cols):
-            grid[i].append(color)
-    return grid
-
 def background_draw(win):
     win.fill(BG_COLOUR)
     pygame.draw.rect(win , (55,57,61) , (WORKSPACE_START_W,WORKSPACE_START_H , WORKSPACE_WIDTH,WORKSPACE_HEIGHT) , 5)
@@ -33,16 +25,18 @@ def draw(win,debug):
         pygame.draw.rect(win , RED , (0,WORKSPACE_HEIGHT , 10,10))
     for block in all_blocks:
         block.draw(win)
+    for wire in all_wires:
+        wire.draw()
     pygame.display.update()
         
 run = True
 clock = pygame.time.Clock()
 
-OR = OR()
-
+OR = AND()
+wire1 = wire(WIN, 800,800,1000,1000,1)
+wire2 = wire(WIN, 1000,1000,600,800,0)
 while run:
     clock.tick(FPS)
-    
     for event in pygame.event.get(): 
         if event.type == pygame.QUIT:
             run = False
