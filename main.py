@@ -1,7 +1,4 @@
-from ast import With
-from pickle import TRUE
 from xml.etree.ElementTree import PI
-from screeninfo import get_monitors
 
 from numpy import full
 from utils import *
