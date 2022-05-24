@@ -2,14 +2,16 @@ import pygame
 pygame.init()
 pygame.font.init()
 
-
+#cvetove
 WHITE = (255, 255, 255)
 BLACK = (26, 37, 41)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
-FPS = 60
+BG_COLOUR = (31, 32, 34)
 
+#rezolucii i matematikata zad resunkite na backgrounda
+FPS = 60
 RESOLUTIONS = [(600, 480), (1280, 720), (1920, 1080), (1920, 1200)]
 RES = 2
 
@@ -27,10 +29,8 @@ BLOCKMENU_WIDTH, BLOCKMENU_HEIGHT = WIDTH - 2*x_w, bm_x_h * 2
 # ------------------------------------------------------
 
 
-BG_COLOUR = (31, 32, 34)
-
-DRAW_GRID_LINES = True
 
 
+#font
 def get_font(size):
     return pygame.font.SysFont("comicsans", size)
