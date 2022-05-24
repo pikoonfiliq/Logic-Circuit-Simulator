@@ -1,7 +1,8 @@
+from ast import Try
 from xml.etree.ElementTree import PI
 
 from numpy import full
-from utils import *
+from utils import * 
 
 
 
@@ -17,35 +18,42 @@ def init_grid(rows,cols,color):
             grid[i].append(color)
     return grid
 
-def grid_draw(win,grid):
-    for i , row in enumerate(grid):
-        for j , pixel in enumerate(row):
-            pygame.draw.rect(win , pixel , (j * PIXEL_SIZE + 10, i * PIXEL_SIZE + 10,PIXEL_SIZE,PIXEL_SIZE))
-    if DRAW_GRID_LINES:
-        for i in range(ROWS):
-            pygame.draw.line(win, WHITE ,(10,i * PIXEL_SIZE ),(WIDTH - 10 , i * PIXEL_SIZE))
-        for i in range(COLUMS):
-            pygame.draw.line(win, WHITE ,(i * PIXEL_SIZE , 10),(i * PIXEL_SIZE, HEIGHT - TOOLBAR_HIGHT))
-
 def background_draw(win):
-    win.fill(ORANGE)
-    pygame.draw.rect(win,BG_COLOUR,[10,10,WIDTH - 20, HEIGHT - 20])
+    win.fill(BG_COLOUR)
+    pygame.draw.rect(win , (55,57,61) , (WORKSPACE_START_W,WORKSPACE_START_H , WORKSPACE_WIDTH,WORKSPACE_HEIGHT) , 5)
+    pygame.draw.rect(win , (55,57,61) , (BLOCKMENU_START_W,BLOCKMENU_START_H , BLOCKMENU_WIDTH,BLOCKMENU_HEIGHT) , 5)
+    pygame.draw.rect(win , (55,57,61) , (FILEMENU_START_W,FILEMENU_START_H , FILEMENU_WIDTH,FILEMENU_HEIGHT))
 
-def draw(win , grid):
+
+
+
+def draw(win,debug,x,y):
     background_draw(win)
-    grid_draw(win,grid)
+    if debug == 1:
+        pygame.draw.rect(win , RED , (x,y , 10,10))
     pygame.display.update()
-
+        
 run = True
 clock = pygame.time.Clock()
-grid = init_grid(ROWS, COLUMS, BG_COLOUR)
+
 
 
 while run:
     clock.tick(FPS)
-    for event in pygame.event.get():
+    
+    for event in pygame.event.get(): 
         if event.type == pygame.QUIT:
             run = False
-    draw(WIN,grid)
+        
+        if pygame.mouse.get_pressed()[0]:
+            x,y = pygame.mouse.get_pos()
+            debug = 1
+            try:
+                pass
+            except IndexError:
+                pass
+        else:
+            debug = 0
+    draw(WIN,debug, x,y)
 
 pygame.quit() 
