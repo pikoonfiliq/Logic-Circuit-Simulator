@@ -31,12 +31,14 @@ def draw(win,debug):
     background_draw(win)
     if debug == 1:
         pygame.draw.rect(win , RED , (0,WORKSPACE_HEIGHT , 10,10))
+    for block in all_blocks:
+        block.draw(win)
     pygame.display.update()
         
 run = True
 clock = pygame.time.Clock()
 
-
+OR = OR()
 
 while run:
     clock.tick(FPS)
