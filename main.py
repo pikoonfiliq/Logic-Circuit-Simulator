@@ -27,10 +27,10 @@ def background_draw(win):
 
 
 
-def draw(win,debug,x,y):
+def draw(win,debug):
     background_draw(win)
     if debug == 1:
-        pygame.draw.rect(win , RED , (x,y , 10,10))
+        pygame.draw.rect(win , RED , (0,WORKSPACE_HEIGHT , 10,10))
     pygame.display.update()
         
 run = True
@@ -54,6 +54,6 @@ while run:
                 pass
         else:
             debug = 0
-    draw(WIN,debug, x,y)
+    draw(WIN,debug)
 
 pygame.quit() 
