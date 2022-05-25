@@ -35,8 +35,10 @@ class AND:
         self.x = x
         self.y = y
         self.wire = []
-        self.input1 = (self.x - block_size*2, self.y + block_size/2)
-        self.input2 = (self.x - block_size*2, self.y - block_size/2)
+        self.input1_coords = (self.x - block_size*2, self.y + block_size/2)
+        self.input2_coords = (self.x - block_size*2, self.y - block_size/2)
+        self.input1 = 0
+        self.input2 = 0
         all_blocks.append(self)
     def move(self):
         while get_pressed():
@@ -48,10 +50,10 @@ class AND:
         filled_circle(screen, self.x, self.y, block_size, block_color)
         
         # risuva krugcheta okolo input tochkite
-        filled_circle(screen, int(self.input1[0]), int(self.input1[1]), int(dot_size), RED)
-        filled_circle(screen, int(self.input2[0]), int(self.input2[1]), int(dot_size), RED)
+        filled_circle(screen, int(self.input1_coords[0]), int(self.input1_coords[1]), int(dot_size), RED)
+        filled_circle(screen, int(self.input2_coords[0]), int(self.input2_coords[1]), int(dot_size), RED)
         
         # risuva samite tochki za da e po - qsno
-        rect(screen, block_color, (self.input1[0], self.input1[1], 2, 2))
-        rect(screen, block_color, (self.input2[0], self.input2[1], 2, 2))
+        rect(screen, block_color, (self.input1_coords[0], self.input1_coords[1], 2, 2))
+        rect(screen, block_color, (self.input2_coords[0], self.input2_coords[1], 2, 2))
         
