@@ -1,6 +1,6 @@
 from ast import Try
 from xml.etree.ElementTree import PI
-
+import time 
 from numpy import full
 from utils import * 
 
