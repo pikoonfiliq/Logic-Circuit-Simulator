@@ -27,6 +27,8 @@ def draw(win,debug):
         block.draw(win)
     for wire in all_wires:
         wire.draw()
+    for button in all_buttons:
+        button.draw()
     pygame.display.update()
         
 run = True
@@ -35,6 +37,8 @@ clock = pygame.time.Clock()
 OR = AND()
 wire1 = wire(WIN, 800,800,1000,1000,1)
 wire2 = wire(WIN, 1000,1000,600,800,0)
+button1 = Button(WIN,1,(255, 95, 31),'MY')
+button2 = Button(WIN,2,(0, 206, 0),'BALLS')
 while run:
     clock.tick(FPS)
     for event in pygame.event.get(): 
@@ -44,6 +48,11 @@ while run:
         if pygame.mouse.get_pressed()[0]:
             x,y = pygame.mouse.get_pos()
             debug = 1
+            
+            for butt in all_buttons:
+                if butt.get_pos(x,y):
+                    print("kato si cuknal tuk tr se suzdade bloche s nomer" + str(butt.num))
+                    time.sleep(0.2)
             try:
                 pass
             except IndexError:
