@@ -1,6 +1,3 @@
-from ast import Try
-from xml.etree.ElementTree import PI
-import time 
 from numpy import full
 from utils import * 
 
@@ -8,57 +5,69 @@ from utils import *
 
 
 WIN = pygame.display.set_mode(RESOLUTIONS[RES] ,pygame.FULLSCREEN)
-pygame.display.set_caption("bruh")
-
-def background_draw(win):
-    win.fill(BG_COLOUR)
-    pygame.draw.rect(win , (55,57,61) , (WORKSPACE_START_W,WORKSPACE_START_H , WORKSPACE_WIDTH,WORKSPACE_HEIGHT) , 5)
-    pygame.draw.rect(win , (55,57,61) , (BLOCKMENU_START_W,BLOCKMENU_START_H , BLOCKMENU_WIDTH,BLOCKMENU_HEIGHT) , 5)
-    pygame.draw.rect(win , (55,57,61) , (FILEMENU_START_W,FILEMENU_START_H , FILEMENU_WIDTH,FILEMENU_HEIGHT))
-
-
-
-
-def draw(win,debug):
-    background_draw(win)
-    if debug == 1:
-        pygame.draw.rect(win , RED , (0,WORKSPACE_HEIGHT , 10,10))
-    for block in all_blocks:
-        block.draw(win)
-    for wire in all_wires:
-        wire.draw()
-    for button in all_buttons:
-        button.draw()
-    pygame.display.update()
-        
+pygame.display.set_caption(NAME)     
 run = True
 clock = pygame.time.Clock()
 
-OR = AND()
-wire1 = wire(WIN, 800,800,1000,1000,1)
-wire2 = wire(WIN, 1000,1000,600,800,0)
-button1 = Button(WIN,1,(255, 95, 31),'MY')
-button2 = Button(WIN,2,(0, 206, 0),'BALLS')
+#initializing main 4 buttons
+Button(WIN,(206, 206, 206),'AND', AND)
+Button(WIN,(206, 206, 206),'OR', OR)
+Button(WIN,(206, 206, 206),'NAND', NAND)
+Button(WIN,(206, 206, 206),'NOR', NOR)
+
+#main loop
 while run:
     clock.tick(FPS)
+    draw(WIN)#drawing
+    current_bl = 0#counter used later
     for event in pygame.event.get(): 
+        event_global = event
         if event.type == pygame.QUIT:
             run = False
-        
+        #logic updates
+        for block_ in all_blocks:
+            block_.updateState()
+        for wire_ in all_wires:
+            wire_.updateState()
+        for dot_ in all_border_end_dots:
+            dot_.updateState()
+        #moveing a block
+        for block in all_blocks:
+                if block.outline_top[0] < x < block.outline_bot[0] and block.outline_top[1] < y < block.outline_bot[1]:
+                    block.move(WIN)
+        #mouse clicked
         if pygame.mouse.get_pressed()[0]:
-            x,y = pygame.mouse.get_pos()
-            debug = 1
+            x, y = pygame.mouse.get_pos()
             
+            #if we are makinh a wire
+            wire(WIN, ev=event)
+            #if a button has been klicked
             for butt in all_buttons:
                 if butt.get_pos(x,y):
-                    print("kato si cuknal tuk tr se suzdade bloche s nomer" + str(butt.num))
-                    time.sleep(0.2)
-            try:
-                pass
-            except IndexError:
-                pass
-        else:
-            debug = 0
-    draw(WIN,debug)
-
+                    butt.onclick()
+              
+            flag = 0#flag
+            #if we clicked near the border of the board we crate an entry dot
+            if WORKSPACE_START_W - 10 < x and WORKSPACE_START_W + 10 > x:
+                if WORKSPACE_START_H < y and WORKSPACE_START_H + WORKSPACE_HEIGHT > y :
+                    if not len(all_border_dots) == 0:
+                        for dot in all_border_dots:
+                            if dot.checkIFclicked(x, y):
+                                flag = 1
+                                break
+                            else:
+                                flag = 0
+                    if not flag == 1:
+                        BorderDot(y=y)
+            #if we clicked on the other side of the board we me an exit dot            
+            if WORKSPACE_START_W + WORKSPACE_WIDTH - 10 < x and WORKSPACE_START_W + WORKSPACE_WIDTH + 10> x:
+                if WORKSPACE_START_H < y and WORKSPACE_START_H + WORKSPACE_HEIGHT > y :
+                    BorderDotEnd(y=y, x=WORKSPACE_START_W + WORKSPACE_WIDTH)
+    #if a moved block is outside the workspace it will get deleted with the wires its connected
+    for block in all_blocks:
+        if block.y < WORKSPACE_START_H or block.y > WORKSPACE_START_H + WORKSPACE_HEIGHT or block.x < WORKSPACE_START_W or block.x > WORKSPACE_START_W + WORKSPACE_WIDTH:
+            snap(block)
+            del all_blocks[current_bl]
+    current_bl=current_bl+1
+            
 pygame.quit() 
