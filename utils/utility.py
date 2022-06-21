@@ -21,8 +21,8 @@ BLOCKMENU_WIDTH, BLOCKMENU_HEIGHT = WIDTH - 2*x_w, bm_x_h * 2
 # ------------------------------------------------------
 
 x = bm_x_h / 2
-
-block_size = WIDTH / 64
+size_text_work_block = int((x*2)*SIZE)
+block_size = (WIDTH / 64) * SIZE
 dot_size = block_size/5
 
 
@@ -73,5 +73,3 @@ def draw(win, temp_lines=None):
     for dot in all_border_end_dots:
         dot.draw(win)
     pygame.display.update()
-
-
