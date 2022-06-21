@@ -1,9 +1,6 @@
-
-
 from pygame.mouse import get_rel, get_pressed, get_pos
 from pygame.gfxdraw import filled_circle
 from pygame.draw import rect, line
-from time import sleep
 from .utility import *
 from .User_settings import *
 
@@ -23,7 +20,7 @@ class BorderDot:
         self.dots = []
         self.dots.append((self.x, self.y))
         all_border_dots.append(self)
-        sleep(0.3)# used to prevent more than one dots appearing when clicking near the border
+        
     def change_state(self):
         self.state = 1 if self.state == 0 else 0
         self.color = border_dot_color_0 if self.state == 0 else border_dot_color_1
@@ -48,7 +45,7 @@ class Button:
         self.txt = text
         self.screen = screen
         all_buttons.append(self)
-        sleep(0.3) # used to prevent more than one blocks appearing when clicking on button
+        
     def get_pos(self,mouse_x,mouse_y):
 
         BLOCK_START_W = BLOCKMENU_START_W + x*self.num+((BLOCKMENU_WIDTH-11*x)/10)*(self.num-1)
@@ -225,7 +222,7 @@ class AND:
         filled_circle(screen, int(self.state_coords[0]), int(self.state_coords[1]), int(dot_size), RED)
         
         #risuva tekst sus AND
-        my_font = get_font(int(x*2))
+        my_font = get_font(size_text_work_block)
         text_surface = my_font.render("AND", False, (0, 0, 0))
         screen.blit(text_surface, (self.x - block_size*2 +((block_size*2*2 -text_surface.get_size()[0])/2), self.y - block_size + ((block_size*2 -text_surface.get_size()[1])/2)))
         
@@ -303,7 +300,7 @@ class NAND:
         filled_circle(screen, int(self.state_coords[0]), int(self.state_coords[1]), int(dot_size), RED)
         
         #risuva tekst sus AND
-        my_font = get_font(int(x*2))
+        my_font = get_font(size_text_work_block)
         text_surface = my_font.render("NAND", False, (0, 0, 0))
         screen.blit(text_surface, (self.x - block_size*2 +((block_size*2*2 -text_surface.get_size()[0])/2), self.y - block_size + ((block_size*2 -text_surface.get_size()[1])/2)))
         
@@ -382,7 +379,7 @@ class OR:
         filled_circle(screen, int(self.state_coords[0]), int(self.state_coords[1]), int(dot_size), RED)
         
         #risuva tekst sus AND
-        my_font = get_font(int(x*2))
+        my_font = get_font(size_text_work_block)
         text_surface = my_font.render("OR", False, (0, 0, 0))
         screen.blit(text_surface, (self.x - block_size*2 +((block_size*2*2 -text_surface.get_size()[0])/2), self.y - block_size + ((block_size*2 -text_surface.get_size()[1])/2)))
         
@@ -461,7 +458,7 @@ class NOR:
         filled_circle(screen, int(self.state_coords[0]), int(self.state_coords[1]), int(dot_size), RED)
         
         #risuva tekst sus AND
-        my_font = get_font(int(x*2))
+        my_font = get_font(size_text_work_block)
         text_surface = my_font.render("NOR", False, (0, 0, 0))
         screen.blit(text_surface, (self.x - block_size*2 +((block_size*2*2 -text_surface.get_size()[0])/2), self.y - block_size + ((block_size*2 -text_surface.get_size()[1])/2)))
         
@@ -486,18 +483,9 @@ class BorderDotEnd:
         self.dots = []
         self.dots.append((self.x, self.y))
         all_border_end_dots.append(self)
-        sleep(0.3)# used to prevent more than one dots appearing when clicking near the border
     def updateState(self):
         for wire in self.wire:
             self.state = wire.state
         self.color = border_dot_color_0 if self.state == 0 else border_dot_color_1
-    def checkIFclicked(self, x, y):
-        """
-        check if x, y are in the dot
-        """
-        if self.x - self.size < x < self.x + self.size and self.y - self.size < y < self.y + self.size:
-            #self.change_state()
-            return True
-        return False
     def draw(self, screen):
         filled_circle(screen, self.x, self.y, int(self.size), self.color)
