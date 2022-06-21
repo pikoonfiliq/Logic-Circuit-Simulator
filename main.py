@@ -37,32 +37,33 @@ while run:
                     block.move(WIN)
         #mouse clicked
         if pygame.mouse.get_pressed()[0]:
-            x, y = pygame.mouse.get_pos()
-            
-            #if we are makinh a wire
-            wire(WIN, ev=event)
-            #if a button has been klicked
-            for butt in all_buttons:
-                if butt.get_pos(x,y):
-                    butt.onclick()
-              
-            flag = 0#flag
-            #if we clicked near the border of the board we crate an entry dot
-            if WORKSPACE_START_W - 10 < x and WORKSPACE_START_W + 10 > x:
-                if WORKSPACE_START_H < y and WORKSPACE_START_H + WORKSPACE_HEIGHT > y :
-                    if not len(all_border_dots) == 0:
-                        for dot in all_border_dots:
-                            if dot.checkIFclicked(x, y):
-                                flag = 1
-                                break
-                            else:
-                                flag = 0
-                    if not flag == 1:
-                        BorderDot(y=y)
-            #if we clicked on the other side of the board we me an exit dot            
-            if WORKSPACE_START_W + WORKSPACE_WIDTH - 10 < x and WORKSPACE_START_W + WORKSPACE_WIDTH + 10> x:
-                if WORKSPACE_START_H < y and WORKSPACE_START_H + WORKSPACE_HEIGHT > y :
-                    BorderDotEnd(y=y, x=WORKSPACE_START_W + WORKSPACE_WIDTH)
+            if pygame.mouse.get_rel()[0]:
+                x, y = pygame.mouse.get_pos()
+                
+                #if we are makinh a wire
+                wire(WIN, ev=event)
+                #if a button has been klicked
+                for butt in all_buttons:
+                    if butt.get_pos(x,y):
+                        butt.onclick()
+                
+                flag = 0#flag
+                #if we clicked near the border of the board we crate an entry dot
+                if WORKSPACE_START_W - 10 < x and WORKSPACE_START_W + 10 > x:
+                    if WORKSPACE_START_H < y and WORKSPACE_START_H + WORKSPACE_HEIGHT > y :
+                        if not len(all_border_dots) == 0:
+                            for dot in all_border_dots:
+                                if dot.checkIFclicked(x, y):
+                                    flag = 1
+                                    break
+                                else:
+                                    flag = 0
+                        if not flag == 1:
+                            BorderDot(y=y)
+                #if we clicked on the other side of the board we me an exit dot            
+                if WORKSPACE_START_W + WORKSPACE_WIDTH - 10 < x and WORKSPACE_START_W + WORKSPACE_WIDTH + 10> x:
+                    if WORKSPACE_START_H < y and WORKSPACE_START_H + WORKSPACE_HEIGHT > y :
+                        BorderDotEnd(y=y, x=WORKSPACE_START_W + WORKSPACE_WIDTH)
     #if a moved block is outside the workspace it will get deleted with the wires its connected
     for block in all_blocks:
         if block.y < WORKSPACE_START_H or block.y > WORKSPACE_START_H + WORKSPACE_HEIGHT or block.x < WORKSPACE_START_W or block.x > WORKSPACE_START_W + WORKSPACE_WIDTH:
