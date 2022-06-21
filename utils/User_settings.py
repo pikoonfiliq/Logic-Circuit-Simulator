@@ -14,6 +14,8 @@ RES = 7
 FONTS = ["comicsans", "arial"]
 FONT = 1
 #colors that can be changed easely by the user if needed
+SIZE = 1
+#size of a block
 block_color = (0, 102, 255)
 wire_color_0 = (25, 77, 0)
 wire_color_1 = (255, 51, 0)
