@@ -29,7 +29,7 @@
 List the ready features here:
 - Easy to use UI
 - Variety of logic blocks
-- Ability to scale things up and down
+- Scalable UI
 
 
 ## Screenshots
